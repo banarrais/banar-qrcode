@@ -1,4 +1,4 @@
-package com.codingwithme.qrcodereaeder
+package com.qrcode.banar
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

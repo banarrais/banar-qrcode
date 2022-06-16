@@ -1,4 +1,4 @@
-package com.codingwithme.qrcodereaeder
+package com.qrcode.banar
 
 import org.junit.Test
 

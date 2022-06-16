@@ -1,7 +1,6 @@
-package com.codingwithme.qrcodereaeder
+package com.qrcode.banar
 
 import android.content.Intent
-import android.graphics.drawable.Animatable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -15,10 +14,8 @@ import androidx.cardview.widget.CardView
 import com.google.zxing.integration.android.IntentIntegrator
 import com.journeyapps.barcodescanner.CaptureActivity
 import org.json.JSONException
-import org.w3c.dom.Text
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
-import java.util.jar.Manifest
 
 class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
     EasyPermissions.RationaleCallbacks {
@@ -34,7 +31,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+//  memanggil layout berdasarkan id di pada file activity_main.xml
         cardView1 = findViewById(R.id.cardView1)
         cardView2 = findViewById(R.id.cardView2)
         btnScan = findViewById(R.id.btnScan)
@@ -42,7 +39,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
         btnEnter = findViewById(R.id.btnEnter)
         edtCode = findViewById(R.id.edtCode)
         tvText = findViewById(R.id.tvText)
-
+//  membuat animasi fade in fade out saat pertama kali membuka aplikasi
         hide = AnimationUtils.loadAnimation(this, android.R.anim.fade_out)
         reveal = AnimationUtils.loadAnimation(this, android.R.anim.fade_in)
 
@@ -50,7 +47,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
         cardView2!!.startAnimation(reveal)
         tvText!!.setText("Scan QR Code Here")
         cardView2!!.visibility = View.VISIBLE
-
+//  menmbah event listener ketika klik scan atau enter code
         btnScan!!.setOnClickListener {
             tvText!!.startAnimation(reveal)
             cardView1!!.startAnimation(hide)
@@ -63,8 +60,8 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
 
 
         }
-
-        cardView2!!.setOnClickListener {
+//  membuka kamera saat klik scan code
+ cardView2!!.setOnClickListener {
             cameraTask()
         }
 
@@ -90,13 +87,13 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
         }
 
     }
-
+//  meminta akses kamera pada aplikasi
     private fun hasCameraAccess(): Boolean {
         return EasyPermissions.hasPermissions(this, android.Manifest.permission.CAMERA)
     }
 
     private fun cameraTask() {
-
+// kondisi jika akses kamera diizinkan
         if (hasCameraAccess()) {
 
             var qrScanner = IntentIntegrator(this)
@@ -115,16 +112,19 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks,
             )
         }
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+// hasil dari scanning
+ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
 
         var result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+//    cek kondisi hasil scanning
         if (result != null) {
+//            jika hasil scan tidak berhasil
             if (result.contents == null) {
                 Toast.makeText(this, "Result Not Found", Toast.LENGTH_SHORT).show()
                 edtCode!!.setText("")
             } else {
+//                jika hasil scan berhasil
                 try {
 
                     cardView1!!.startAnimation(reveal)
